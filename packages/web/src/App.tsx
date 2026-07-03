@@ -5,7 +5,7 @@ import ValidationResult from './components/ValidationResult';
 import NetworkError from './components/NetworkError';
 import { usePuzzle } from './hooks/usePuzzle';
 import { useValidation } from './hooks/useValidation';
-import type { Board, Difficulty } from '@init-sudoku-post7/contracts';
+import { Board, Difficulty } from '@init-sudoku-post7/contracts';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
