@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { getTopLeaderboard } from '../database';
-import { Difficulty, LeaderboardResponse } from '../../contracts/src/index';
+import { getTopLeaderboard } from '../db/database';
+import { Difficulty, LeaderboardResponse } from '../../../contracts/src/index';
 
 const router = Router();
 
