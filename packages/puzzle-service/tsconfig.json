@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
-    "composite": true,
     "outDir": "dist",
     "rootDir": "src",
+    "module": "commonjs",
+    "target": "ES2022",
     "strict": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "sourceMap": true,
+    "composite": true
   },
-  "references": [
-    {
-      "path": "../contracts"
-    }
-  ],
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "references": [{"path": "../contracts"}]
 }
