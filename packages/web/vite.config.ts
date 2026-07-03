@@ -1,22 +1,24 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 
+// Vite configuration for the web-client package.
 export default defineConfig({
+  root: '.',
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
   server: {
-    // Proxy API calls to the backend services (assuming they run on localhost:4000)
+    // Assuming the backend services are proxied under /api during development.
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'http://localhost:3000', // Adjust to actual backend URL.
         changeOrigin: true,
         secure: false,
       },
+    },
+  },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: 'index.html',
     },
   },
 });

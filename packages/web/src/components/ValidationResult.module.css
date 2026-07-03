@@ -1,12 +1,11 @@
-/* Styles for validation result */
+/* Validation result styles */
 .result {
   margin-top: 1rem;
   font-size: 1.2rem;
-  font-weight: bold;
 }
 .valid {
-  color: green;
+  color: #4caf50;
 }
 .invalid {
-  color: red;
+  color: #d32f2f;
 }

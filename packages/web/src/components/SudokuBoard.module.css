@@ -1,23 +1,26 @@
 /* Sudoku board grid */
 .board {
   display: grid;
-  grid-template-columns: repeat(9, 2rem);
-  grid-template-rows: repeat(9, 2rem);
-  gap: 1px;
-  background-color: #444;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+  max-width: 360px;
+  margin: 0 auto;
 }
+
 .cell {
-  width: 2rem;
-  height: 2rem;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  font-size: 1rem;
-  border: none;
-  outline: none;
+  font-size: 1.2rem;
+  border: 1px solid #999;
+  background-color: #fff;
 }
-.cell.readOnly {
+
+.readOnly {
   background-color: #e0e0e0;
   font-weight: bold;
 }
-.cell.editable {
+
+.editable {
   background-color: #fff;
 }

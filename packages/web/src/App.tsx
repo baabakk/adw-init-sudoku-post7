@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import DifficultySelector from './components/DifficultySelector';
 import SudokuBoard from './components/SudokuBoard';
 import ValidationResult from './components/ValidationResult';
-import ErrorMessage from './components/ErrorMessage';
+import NetworkError from './components/NetworkError';
 import { usePuzzle } from './hooks/usePuzzle';
 import { useValidation } from './hooks/useValidation';
-import type { Board } from '@init-sudoku-post7/contracts';
-import { Difficulty } from '@init-sudoku-post7/contracts';
+import type { Board, Difficulty } from '@init-sudoku-post7/contracts';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
@@ -48,8 +47,8 @@ const App: React.FC = () => {
           {validationLoading ? 'Validating...' : 'Validate'}
         </button>
       </div>
-      {puzzleError && <ErrorMessage message={puzzleError} />}
-      {validationError && <ErrorMessage message={validationError} />}
+      {puzzleError && <NetworkError message={puzzleError} onRetry={refetch} />}
+      {validationError && <NetworkError message={validationError} onRetry={() => validate(board)} />}
       {puzzle && board.length === 9 && (
         <div className={styles.boardWrapper}>
           <SudokuBoard board={board} initial={puzzle.board} onCellChange={handleCellChange} />
