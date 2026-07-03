@@ -1,0 +1,9 @@
+/* Styles for error messages */
+.error {
+  color: #b00020;
+  background-color: #fdd;
+  padding: 0.5rem 1rem;
+  border: 1px solid #b00020;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}

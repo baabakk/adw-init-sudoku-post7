@@ -1,0 +1,23 @@
+/* Sudoku board grid */
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, 2rem);
+  grid-template-rows: repeat(9, 2rem);
+  gap: 1px;
+  background-color: #444;
+}
+.cell {
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+}
+.cell.readOnly {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+.cell.editable {
+  background-color: #fff;
+}
