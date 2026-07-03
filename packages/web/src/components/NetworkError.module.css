@@ -1,0 +1,23 @@
+/* Network error component styles */
+.container {
+  border: 1px solid #d32f2f;
+  background-color: #ffebee;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+}
+.message {
+  color: #d32f2f;
+  margin: 0 0 0.5rem 0;
+}
+.retryButton {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.retryButton:hover {
+  background-color: #b71c1c;
+}
