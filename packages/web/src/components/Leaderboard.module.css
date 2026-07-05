@@ -1,0 +1,26 @@
+.container {
+  padding: 12px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+}
+
+.list {
+  list-style: decimal inside;
+  padding-left: 0;
+  margin: 0;
+}
+
+.item {
+  margin-bottom: 4px;
+}
+
+.error {
+  color: #d32f2f;
+}

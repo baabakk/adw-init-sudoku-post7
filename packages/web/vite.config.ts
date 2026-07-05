@@ -1,24 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
-// Vite configuration for the web-client package.
 export default defineConfig({
-  root: '.',
   plugins: [react()],
+  resolve: {
+    alias: {
+      // Ensure the contracts package resolves correctly.
+      '@init-sudoku-post7/contracts': path.resolve(__dirname, '../contracts/src'),
+    },
+  },
   server: {
-    // Assuming the backend services are proxied under /api during development.
+    // Proxy API calls to the backend services during development.
     proxy: {
       '/api': {
-        target: 'http://localhost:3000', // Adjust to actual backend URL.
+        target: 'http://localhost:3000', // Adjust as needed for the actual service host.
         changeOrigin: true,
         secure: false,
       },
-    },
-  },
-  build: {
-    outDir: 'dist',
-    rollupOptions: {
-      input: 'index.html',
     },
   },
 });

@@ -2,21 +2,20 @@ import React from 'react';
 import type { Difficulty } from '@init-sudoku-post7/contracts';
 import styles from './DifficultySelector.module.css';
 
-type Props = {
+interface Props {
   selected: Difficulty;
   onSelect: (difficulty: Difficulty) => void;
-};
+}
+
+const difficulties: Difficulty[] = ['easy', 'medium', 'hard'];
 
 const DifficultySelector: React.FC<Props> = ({ selected, onSelect }) => {
-  const difficulties: Difficulty[] = ['easy', 'medium', 'hard'];
-
   return (
-    <div className={styles.selector}>
+    <div className={styles.container}>
       {difficulties.map(diff => (
         <button
           key={diff}
-          type="button"
-          className={`${styles.button} ${selected === diff ? styles.active : ''}`}
+          className={`${styles.button} ${selected === diff ? styles.selected : ''}`}
           onClick={() => onSelect(diff)}
         >
           {diff.charAt(0).toUpperCase() + diff.slice(1)}

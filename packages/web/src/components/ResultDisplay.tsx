@@ -2,17 +2,13 @@ import React from 'react';
 import styles from './ResultDisplay.module.css';
 
 type Props = {
-  /** true if board is valid */
+  /** true if the board is valid, false otherwise */
   valid: boolean;
 };
 
 const ResultDisplay: React.FC<Props> = ({ valid }) => (
-  <div className={styles.result} data-testid="validation-result">
-    {valid ? (
-      <span className={styles.valid}>✅ Valid solution!</span>
-    ) : (
-      <span className={styles.invalid}>❌ Invalid solution.</span>
-    )}
+  <div className={styles.result} role="status">
+    {valid ? '✅ Correct solution!' : '❌ Incorrect solution.'}
   </div>
 );
 

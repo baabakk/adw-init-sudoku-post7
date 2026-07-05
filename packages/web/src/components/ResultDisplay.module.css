@@ -1,12 +1,6 @@
-/* Validation result styles */
 .result {
-  margin-top: 1rem;
+  margin-top: 12px;
   font-size: 1.2rem;
+  font-weight: bold;
   text-align: center;
-}
-.valid {
-  color: #4caf50;
-}
-.invalid {
-  color: #d32f2f;
 }

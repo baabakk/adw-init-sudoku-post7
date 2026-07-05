@@ -1,14 +1,20 @@
+import type {
+  ScoreSubmission,
+  ScoreResponse,
+  LeaderboardRequest,
+  LeaderboardResponse,
+  Difficulty,
+} from '@init-sudoku-post7/contracts';
+
 /**
- * Scores Service client stub for the web client.
- * In this phase we only need to provide the function signatures.
- * The actual implementation can be added in later phases.
+ * Base URL for the Scores Service API.
  */
-import type { Difficulty, Score, ScoreResponse, LeaderboardResponse } from '@init-sudoku-post7/contracts';
+const BASE_URL = '/api'; // Adjust as needed for proxy configuration.
 
-const BASE_URL = '/api'; // Assuming proxy for scores endpoints
-
-/** Submit a score to the Scores Service. */
-export async function submitScore(score: Score): Promise<ScoreResponse> {
+/**
+ * Submit a score to the Scores Service.
+ */
+export async function submitScore(score: ScoreSubmission): Promise<ScoreResponse> {
   const url = `${BASE_URL}/scores`;
   const response = await fetch(url, {
     method: 'POST',
@@ -26,7 +32,9 @@ export async function submitScore(score: Score): Promise<ScoreResponse> {
   return data;
 }
 
-/** Fetch the leaderboard for a given difficulty. */
+/**
+ * Retrieve the leaderboard for a given difficulty.
+ */
 export async function getLeaderboard(difficulty: Difficulty): Promise<LeaderboardResponse> {
   const url = `${BASE_URL}/leaderboard?difficulty=${encodeURIComponent(difficulty)}`;
   const response = await fetch(url, {

@@ -1,8 +1,12 @@
-/* Global styles */
-html, body, #root {
-  height: 100%;
+/* Global styles for the Sudoku web client */
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #fafafa;
+}
+
+#root {
+  height: 100%;
 }
