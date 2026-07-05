@@ -1,17 +1,19 @@
 /* Difficulty selector styles */
 .selector {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 12px;
 }
+
 .button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #888;
+  padding: 6px 12px;
+  border: 1px solid #333;
   background-color: #fff;
   cursor: pointer;
+  font-size: 1rem;
 }
+
 .active {
-  background-color: #4caf50;
-  color: white;
-  border-color: #4caf50;
+  background-color: #333;
+  color: #fff;
 }

@@ -6,6 +6,7 @@ import NetworkError from './components/NetworkError';
 import { usePuzzle } from './hooks/usePuzzle';
 import { useValidation } from './hooks/useValidation';
 import type { Board as SudokuBoard, Difficulty } from '@init-sudoku-post7/contracts';
+import { cloneBoard } from './utils/boardUtils';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
@@ -13,21 +14,22 @@ const App: React.FC = () => {
   const { puzzle, loading: puzzleLoading, error: puzzleError, refetch } = usePuzzle(difficulty);
   const { validate, loading: validationLoading, error: validationError, result } = useValidation();
 
+  // Board state always defined; will be set when puzzle loads.
   const [board, setBoard] = useState<SudokuBoard>([] as any);
 
   // Initialize board when puzzle loads
   useEffect(() => {
     if (puzzle?.board) {
-      const copy = puzzle.board.map(row => [...row]);
-      setBoard(copy as SudokuBoard);
+      const copied = cloneBoard(puzzle.board);
+      setBoard(copied);
     }
   }, [puzzle]);
 
   const handleCellChange = (row: number, col: number, value: number) => {
     setBoard(prev => {
-      const newBoard = prev.map(r => [...r]);
-      newBoard[row][col] = value;
-      return newBoard as SudokuBoard;
+      const newBoard = cloneBoard(prev);
+      newBoard[row][col] = value as any;
+      return newBoard;
     });
   };
 
@@ -49,7 +51,7 @@ const App: React.FC = () => {
       </div>
       {puzzleError && <NetworkError message={puzzleError} onRetry={refetch} />}
       {validationError && <NetworkError message={validationError} onRetry={() => validate(board)} />}
-      {puzzle && board.length === 9 && (
+      {puzzle && board && (
         <div className={styles.boardWrapper}>
           <Board board={board} initial={puzzle.board} onCellChange={handleCellChange} />
         </div>

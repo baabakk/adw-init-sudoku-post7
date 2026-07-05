@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import type { ValidateResponse, Board } from '@init-sudoku-post7/contracts';
-import { validateBoard } from '../services/puzzleService';
+import { validateBoard } from '../services/validationService';
 
 /**
  * Custom hook to submit a Sudoku board for validation.

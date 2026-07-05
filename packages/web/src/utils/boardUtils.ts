@@ -1,24 +1,29 @@
 /**
  * Utility functions for Sudoku board manipulation and validation.
  */
-import type { Board } from '@init-sudoku-post7/contracts';
+import type { Board, Row } from '@init-sudoku-post7/contracts';
 
 /**
  * Deep clone a Sudoku board.
+ *
+ * The board is a tuple of rows, each a tuple of numbers. We perform a deep copy
+ * via JSON serialization (the board contains only numbers) and then cast the
+ * result back to the exact `Board` tuple type expected by the contracts.
  */
 export function cloneBoard(board: Board): Board {
-  return board.map(row => [...row]);
+  // JSON round‑trip creates a deep copy of the nested arrays.
+  const cloned = JSON.parse(JSON.stringify(board)) as unknown as Board;
+  return cloned;
 }
 
 /**
  * Check if a completed board satisfies Sudoku rules.
- * Returns true if every row, column, and 3x3 subgrid contains numbers 1-9 exactly once.
+ * Returns true if every row, column, and 3x3 subgrid contains numbers 1‑9 exactly once.
  */
 export function isBoardValid(board: Board): boolean {
-  const size = 9;
+  const size = 9 as const;
   const digits = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-  // Helper to check a collection of 9 cells
   const checkGroup = (cells: number[]): boolean => {
     const set = new Set(cells);
     if (set.size !== size) return false;
@@ -35,7 +40,7 @@ export function isBoardValid(board: Board): boolean {
 
   // Columns
   for (let c = 0; c < size; c++) {
-    const col = [] as number[];
+    const col: number[] = [];
     for (let r = 0; r < size; r++) col.push(board[r][c]);
     if (!checkGroup(col)) return false;
   }
