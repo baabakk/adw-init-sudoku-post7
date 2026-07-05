@@ -1,0 +1,12 @@
+/* Validation result styles */
+.result {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.valid {
+  color: #4caf50;
+}
+.invalid {
+  color: #d32f2f;
+}

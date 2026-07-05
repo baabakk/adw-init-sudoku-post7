@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import DifficultySelector from './components/DifficultySelector';
-import SudokuBoard from './components/SudokuBoard';
-import ValidationResult from './components/ValidationResult';
+import Board from './components/Board';
+import ResultDisplay from './components/ResultDisplay';
 import NetworkError from './components/NetworkError';
 import { usePuzzle } from './hooks/usePuzzle';
 import { useValidation } from './hooks/useValidation';
-import { Board, Difficulty } from '@init-sudoku-post7/contracts';
+import { Board as SudokuBoard, Difficulty } from '@init-sudoku-post7/contracts';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
-  const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Easy);
+  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
   const { puzzle, loading: puzzleLoading, error: puzzleError, refetch } = usePuzzle(difficulty);
   const { validate, loading: validationLoading, error: validationError, result } = useValidation();
 
-  const [board, setBoard] = useState<Board>([]);
+  const [board, setBoard] = useState<SudokuBoard>([] as any);
 
   // Initialize board when puzzle loads
   useEffect(() => {
     if (puzzle?.board) {
       const copy = puzzle.board.map(row => [...row]);
-      setBoard(copy);
+      setBoard(copy as SudokuBoard);
     }
   }, [puzzle]);
 
@@ -27,7 +27,7 @@ const App: React.FC = () => {
     setBoard(prev => {
       const newBoard = prev.map(r => [...r]);
       newBoard[row][col] = value;
-      return newBoard;
+      return newBoard as SudokuBoard;
     });
   };
 
@@ -51,10 +51,10 @@ const App: React.FC = () => {
       {validationError && <NetworkError message={validationError} onRetry={() => validate(board)} />}
       {puzzle && board.length === 9 && (
         <div className={styles.boardWrapper}>
-          <SudokuBoard board={board} initial={puzzle.board} onCellChange={handleCellChange} />
+          <Board board={board} initial={puzzle.board} onCellChange={handleCellChange} />
         </div>
       )}
-      {result !== undefined && <ValidationResult valid={result} />}
+      {result !== undefined && <ResultDisplay valid={result} />}
     </div>
   );
 };

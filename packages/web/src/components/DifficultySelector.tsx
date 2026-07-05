@@ -1,5 +1,5 @@
 import React from 'react';
-import { Difficulty } from '@init-sudoku-post7/contracts';
+import type { Difficulty } from '@init-sudoku-post7/contracts';
 import styles from './DifficultySelector.module.css';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const DifficultySelector: React.FC<Props> = ({ selected, onSelect }) => {
-  const difficulties: Difficulty[] = [Difficulty.Easy, Difficulty.Medium, Difficulty.Hard];
+  const difficulties: Difficulty[] = ['easy', 'medium', 'hard'];
 
   return (
     <div className={styles.selector}>
