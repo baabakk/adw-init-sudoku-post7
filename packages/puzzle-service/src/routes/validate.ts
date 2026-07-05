@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { ValidateResponse } from '@init-sudoku-post7/contracts';
-import { isValidSolution } from '../validators/board';
+import { isValidSolution } from '../validator';
 
 const router = Router();
 

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { Difficulty, Board } from '@init-sudoku-post7/contracts';
+import { Board } from '@init-sudoku-post7/contracts';
 
 /**
  * Middleware that validates incoming requests for the puzzle-service.
- * - GET /puzzle: requires a valid `difficulty` query parameter matching the Difficulty enum.
+ * - GET /puzzle: requires a valid `difficulty` query parameter ('easy' | 'medium' | 'hard').
  * - POST /validate: requires a `board` field in the JSON body that is a 9x9 array of numbers (0‑9).
  * If validation fails, responds with 400 and an error message.
  */
@@ -14,12 +14,14 @@ export function inputValidation(req: Request, res: Response, next: NextFunction)
       res.status(400).json({ error: 'Missing difficulty query parameter' });
       return;
     }
-    if (!Object.values(Difficulty).includes(diff as Difficulty)) {
-      res.status(400).json({ error: `Invalid difficulty. Expected one of ${Object.values(Difficulty).join(', ')}` });
+    if (!isValidDifficulty(diff)) {
+      res
+        .status(400)
+        .json({ error: "Invalid difficulty. Expected one of 'easy', 'medium', 'hard'" });
       return;
     }
     // Attach typed difficulty to request for downstream handlers
-    (req as any).validatedDifficulty = diff as Difficulty;
+    (req as any).validatedDifficulty = diff as 'easy' | 'medium' | 'hard';
     next();
     return;
   }
@@ -32,7 +34,7 @@ export function inputValidation(req: Request, res: Response, next: NextFunction)
     }
     const board = body.board as any;
     if (!isValidBoardShape(board)) {
-      res.status(400).json({ error: 'Board must be a 9x9 array of numbers' });
+      res.status(400).json({ error: 'Board must be a 9x9 array of numbers (0-9)' });
       return;
     }
     (req as any).validatedBoard = board as Board;
@@ -42,6 +44,10 @@ export function inputValidation(req: Request, res: Response, next: NextFunction)
 
   // For any other routes, just continue.
   next();
+}
+
+function isValidDifficulty(value: string): boolean {
+  return value === 'easy' || value === 'medium' || value === 'hard';
 }
 
 function isValidBoardShape(board: any): board is Board {

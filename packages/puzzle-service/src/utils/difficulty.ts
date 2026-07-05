@@ -6,11 +6,11 @@ import { Difficulty } from '@init-sudoku-post7/contracts';
  */
 export function getRemovalCount(difficulty: Difficulty): number {
   switch (difficulty) {
-    case Difficulty.Easy:
+    case 'easy':
       return 30; // 81 - 30 = 51 filled cells
-    case Difficulty.Medium:
+    case 'medium':
       return 40; // 41 filled cells
-    case Difficulty.Hard:
+    case 'hard':
       return 50; // 31 filled cells
     default:
       // Fallback to medium if unknown (should never happen due to validation)
