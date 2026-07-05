@@ -1,11 +1,11 @@
 // packages/puzzle-service/src/index.ts
 // Main entry point: sets up Express server, registers routes, validation and error handling, and starts listening.
 
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import puzzleRouter from './routes/puzzle';
 import validateRouter from './routes/validate';
 import { inputValidation } from './middleware/inputValidation';
-import { errorHandler } from './errors';
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(inputValidation);
 
 // Routes
-app.use(puzzleRouter);
-app.use(validateRouter);
+app.use('/puzzle', puzzleRouter);
+app.use(validateRouter); // validateRouter defines its own '/validate' path
 
 // 404 handler for unknown routes
 app.use((req: Request, res: Response) => {
