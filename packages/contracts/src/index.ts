@@ -1,68 +1,32 @@
-/**
- * Shared contracts for the Sudoku platform.
- * All cross‑team types are defined here so that each service can import a single source of truth.
- * The file is compiled with "strict": true.
- */
+// Shared contract types for Sudoku platform
 
 /**
- * Difficulty levels supported by the puzzle generator and scoring system.
+ * Difficulty levels supported by the puzzle generator.
  */
-export enum Difficulty {
-  Easy = "easy",
-  Medium = "medium",
-  Hard = "hard",
-}
+export type Difficulty = 'easy' | 'medium' | 'hard';
 
 /**
- * A single Sudoku cell. Numbers 1‑9 are valid values; `null` represents an empty cell.
- * Updated to also accept `0` as an empty cell for compatibility with existing services.
+ * A row in a Sudoku board – exactly nine numbers (0 represents an empty cell).
  */
-export type Cell = number | null;
+export type Row = [number, number, number, number, number, number, number, number, number];
 
 /**
- * A 9×9 Sudoku board. The type is a two‑dimensional array of `Cell` values.
- * Runtime validation should ensure the array is exactly 9×9.
+ * A full Sudoku board – exactly nine rows.
  */
-export type Board = Cell[][];
+export type Board = [Row, Row, Row, Row, Row, Row, Row, Row, Row];
 
 /**
- * A puzzle is simply a board that may be partially filled. The same type is used for
- * generation, validation and transport.
+ * Request parameters for GET /puzzle.
  */
-export type Puzzle = Board;
-
-/**
- * Representation of a completed game that will be stored by the Scores service.
- */
-export interface Score {
-  /** Player's display name */
-  playerName: string;
-  /** Difficulty of the puzzle that was solved */
-  difficulty: Difficulty;
-  /** Time taken to solve the puzzle, expressed in milliseconds */
-  timeToSolveMs: number;
-  /** ISO‑8601 timestamp when the puzzle was completed */
-  completedAt: string;
-}
-
-/**
- * The leaderboard is a list of the best scores for a particular difficulty.
- * The Scores service returns at most the top 10 entries.
- */
-export type Leaderboard = Score[];
-
-/**
- * Request payload for GET /puzzle. The difficulty is supplied as a query parameter
- * but is modelled here as a request object for type safety.
- */
-export interface GetPuzzleRequest {
+export interface PuzzleRequest {
+  /** Desired difficulty level */
   difficulty: Difficulty;
 }
 
 /**
  * Response payload for GET /puzzle.
  */
-export interface GetPuzzleResponse {
+export interface PuzzleResponse {
   /** The generated Sudoku board */
   board: Board;
 }
@@ -70,48 +34,56 @@ export interface GetPuzzleResponse {
 /**
  * Request payload for POST /validate.
  */
-export interface ValidatePuzzleRequest {
-  /** The board to validate – may be a fully solved board or a partially filled one */
+export interface ValidateRequest {
+  /** The board to validate */
   board: Board;
 }
 
 /**
  * Response payload for POST /validate.
  */
-export interface ValidatePuzzleResponse {
-  /** True when the supplied board satisfies Sudoku rules */
+export interface ValidateResponse {
+  /** True when the board satisfies Sudoku rules */
   valid: boolean;
+}
+
+/**
+ * A score entry stored by the Scores service.
+ */
+export interface Score {
+  /** Player's display name */
+  playerName: string;
+  /** Difficulty of the puzzle that was solved */
+  difficulty: Difficulty;
+  /** Time taken to solve the puzzle, in milliseconds */
+  timeToSolveMs: number;
 }
 
 /**
  * Request payload for POST /scores.
  */
-export interface SubmitScoreRequest {
-  /** The score to store */
-  score: Score;
-}
+export type ScoreSubmission = Score;
 
 /**
  * Response payload for POST /scores.
  */
-export interface SubmitScoreResponse {
-  /** Indicates whether the score was successfully persisted */
-  success: boolean;
-  /** Optional human‑readable message, e.g. error details */
-  message?: string;
+export interface ScoreResponse {
+  /** Confirmation that the score was recorded */
+  confirmed: true;
 }
 
 /**
- * Request payload for GET /leaderboard.
+ * Request parameters for GET /leaderboard.
  */
-export interface GetLeaderboardRequest {
+export interface LeaderboardRequest {
+  /** Difficulty for which to retrieve the top scores */
   difficulty: Difficulty;
 }
 
 /**
  * Response payload for GET /leaderboard.
  */
-export interface GetLeaderboardResponse {
-  /** Ordered list of the best scores for the requested difficulty */
-  leaderboard: Leaderboard;
+export interface LeaderboardResponse {
+  /** Array of the top ten scores for the requested difficulty */
+  scores: Score[];
 }
