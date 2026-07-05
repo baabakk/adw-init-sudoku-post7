@@ -17,7 +17,7 @@ export enum Difficulty {
  * A single Sudoku cell. Numbers 1‑9 are valid values; `null` represents an empty cell.
  * Updated to also accept `0` as an empty cell for compatibility with existing services.
  */
-export type Cell = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | null;
+export type Cell = number | null;
 
 /**
  * A 9×9 Sudoku board. The type is a two‑dimensional array of `Cell` values.
