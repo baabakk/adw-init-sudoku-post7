@@ -12,8 +12,13 @@ export type Row = [number, number, number, number, number, number, number, numbe
 
 /**
  * A full Sudoku board – exactly nine rows.
+ *
+ * NOTE: Historically this was a tuple of nine `Row` tuples, which was too
+ * restrictive for implementations that construct the board dynamically (e.g.
+ * using `Array.from`). The contract is now relaxed to a two‑dimensional array
+ * of numbers. Runtime validation should still enforce a 9×9 grid.
  */
-export type Board = [Row, Row, Row, Row, Row, Row, Row, Row, Row];
+export type Board = number[][];
 
 /**
  * Request parameters for GET /puzzle.
