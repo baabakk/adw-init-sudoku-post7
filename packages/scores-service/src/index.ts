@@ -1,34 +1,5 @@
-import express, { Request, Response, NextFunction } from 'express';
-import scoresRouter from './routes/scores';
-import leaderboardRouter from './routes/leaderboard';
-import errorHandler from './middleware/errorHandler';
-import { initDatabase } from './db/database';
-
-const app = express();
-app.use(express.json());
-
-// Initialize DB before handling requests
-initDatabase().catch((err) => {
-  console.error('Failed to initialize database:', err);
-  process.exit(1);
-});
-
-app.use('/scores', scoresRouter);
-app.use('/leaderboard', leaderboardRouter);
-
-// 404 handler
-app.use((req: Request, res: Response) => {
-  res.status(404).json({ error: 'Not found' });
-});
-
-// Error handling middleware
-app.use(errorHandler);
-
-const PORT = process.env.PORT || 3000;
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    console.log(`Scores service listening on port ${PORT}`);
-  });
-}
-
-export default app;
+// scores-service — Scores Service
+// Scope: Persists completed-game results and serves a per-difficulty top-10 leaderboard. Exposes POST /scores and GET /leaderboard endpoints. Owns its own database (e.g., SQLite or PostgreSQL) for score storage.
+// Owns: packages/scores-service
+// This team builds its slice here each phase.
+export {};

@@ -1,19 +1,18 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "dist",
     "rootDir": "src",
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "target": "ES2022",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "types": ["vite/client"]
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   },
-  "include": ["src"],
-  "references": [{ "path": "../contracts" }]
+  "references": [
+    {
+      "path": "../contracts"
+    }
+  ],
+  "include": [
+    "src"
+  ]
 }
