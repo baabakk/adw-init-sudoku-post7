@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
  * Generic error handling middleware.
  * Sends a JSON response with status 500 for unexpected errors.
  */
-export default function errorHandler(
+export function errorHandler(
   err: unknown,
   _req: Request,
   res: Response,

@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { insertScore } from '../database';
-import { ScoreRequest, ScoreResponse } from '../../../contracts/src/index';
+import { insertScore } from '../db/database';
+import { ScoreSubmission, ScoreResponse } from '@init-sudoku-post7/contracts';
+import { validateScoreSubmission } from '../utils/validators';
 
 const router = Router();
 
@@ -8,24 +9,24 @@ const router = Router();
  * POST /scores
  * Persist a completed game result.
  */
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { playerName, difficulty, timeToSolve } = req.body as ScoreRequest;
-    // Basic validation – ensure required fields are present and of correct type.
-    if (
-      typeof playerName !== 'string' ||
-      typeof difficulty !== 'string' ||
-      typeof timeToSolve !== 'number'
-    ) {
-      res.status(400).json({ error: 'Invalid request payload' });
-      return;
+router.post(
+  '/',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const validation = validateScoreSubmission(req.body);
+      if (!validation.valid) {
+        res.status(400).json({ error: validation.error });
+        return;
+      }
+      const score: ScoreSubmission = req.body as ScoreSubmission;
+      // Insert the score into the database (synchronous API wrapped in async for consistency)
+      insertScore(score);
+      const response: ScoreResponse = { confirmed: true };
+      res.status(201).json(response);
+    } catch (err) {
+      next(err);
     }
-    const id = await insertScore({ playerName, difficulty, timeToSolve });
-    const response: ScoreResponse = { id };
-    res.status(201).json(response);
-  } catch (err) {
-    next(err);
-  }
-});
+  },
+);
 
 export default router;
