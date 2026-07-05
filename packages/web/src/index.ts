@@ -1,5 +1,3 @@
-// web-client — Web Client
-// Scope: Browser SPA that renders an interactive Sudoku board, allows difficulty selection, fetches puzzles from Puzzle Service, submits completed boards for validation, and displays results and leaderboard from Scores Service.
-// Owns: packages/web
-// This team builds its slice here each phase.
-export {};
+// Entry point exports for the web client package
+// Export the main App component so it can be imported by the bootstrap code.
+export { default as App } from './App';

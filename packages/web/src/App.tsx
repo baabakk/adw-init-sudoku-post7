@@ -5,7 +5,7 @@ import ResultDisplay from './components/ResultDisplay';
 import NetworkError from './components/NetworkError';
 import { usePuzzle } from './hooks/usePuzzle';
 import { useValidation } from './hooks/useValidation';
-import { Board as SudokuBoard, Difficulty } from '@init-sudoku-post7/contracts';
+import type { Board as SudokuBoard, Difficulty } from '@init-sudoku-post7/contracts';
 import styles from './App.module.css';
 
 const App: React.FC = () => {
